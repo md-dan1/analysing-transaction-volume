@@ -1,8 +1,8 @@
-#start_block: 22555743             # one week before
-start_block: 22606143            # June 1st 2025
-end_block:  22829343              # June 30th 2025
-#end_block: 23264566              # August 31st 2025
-batch_size: 100
+#start_block: 21475194               # max delta ramp up for 1.1.2025              == currently running in algorith_data.csv
+start_block : 21525891                # 2025-01-01 00:00:11+00 - 64 blocks
+end_block: 24136053                #2026-01-01 00:00:11+00                          == currently running in algorith_data.csv
+batch_size: 500
+pricing_mode: usd
 
 token:
   # eth special case - do not change
@@ -14,6 +14,10 @@ token:
     address: "0xdAC17F958D2ee523a2206206994597C13D831ec7"
     active: True
     decimals: 6
+  - name: WETH
+    address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    active: True
+    decimals: 18
   - name: USDC
     address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
     active: True
@@ -22,14 +26,66 @@ token:
     address: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
     active: True
     decimals: 8
-  - name: USDE
+  - name: DAI
+    address: "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+    active: True
+    decimals: 18
+  - name: LINK
+    address: "0x514910771AF9Ca656af840dff83E8264EcF986CA"
+    active: True
+    decimals: 18
+  - name: SHIB
+    address: "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE"
+    active: True
+    decimals: 18
+  - name: PEPE
+    address: "0x6982508145454Ce325dDbE47a25d4ec3d2311933"
+    active: True
+    decimals: 18
+  - name: UNI
+    address: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+    active: True
+    decimals: 18
+  - name: ENA
+    address: "0x57e114B691Db790C35207b2e685D4A43181e6061"
+    active: True
+    decimals: 18
+  - name: PYUSD
+    address: "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"
+    active: True
+    decimals: 6
+  - name: ONDO
+    address: "0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3"
+    active: True
+    decimals: 18
+  - name: AAVE
+    address: "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"
+    active: True
+    decimals: 18
+  - name: CRV
+    address: "0xD533a949740bb3306d119CC777fa900bA034cd52"
+    active: True
+    decimals: 18
+  - name: USDe
     address: "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3"
     active: True
     decimals: 18
-  - name: CBBTC
-    address: "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+  - name: SPX
+    address: "0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C"
     active: True
     decimals: 8
+  - name: NEWT
+    address: "0xD0eC028a3D21533Fdd200838F39c85B03679285D"
+    active: True
+    decimals: 18
+  - name: XCN
+    address: "0xA2cd3D43c775978A96BdBf12d733D5A1ED94fb18"
+    active: True
+    decimals: 18
+  - name: wstETH
+    address: "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+    active: True
+    decimals: 18
 
 dex_events:
    #uniswao v3
@@ -43,30 +99,16 @@ dex_events:
   - "Swap(address,address,int256,int256,uint256,uint128,int24)"
 
 
-# in seconds
+# in seconds == current 1 year run ==
 analysis:
-  cumulative_wealth_gain:
-    - 24
-    - 96
-    - 192
-    - 768
-    - 1536
-    - 86400
-    - 604800
-  defi_transactions:
-    - 24
-    - 96
-    - 192
-    - 768
-    - 1536
-    - 86400
-    - 604800
-  transaction_counting:
-    - 24
-    - 96
-    - 192
-    - 768
-    - 1536
-    - 86400
-    - 604800
+  cumulative_wealth_gain: []
+#    - 24
+#    - 96
+#    - 192
+#    - 384
+#    - 768
 
+  defi_transactions:
+    - 0
+  transaction_counting:
+    - 0

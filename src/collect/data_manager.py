@@ -29,9 +29,15 @@ class DataCollector:
         self.rpc_client = RPCClient(
             rpc_url=config["RCP_URL"]
             )
+
+        # free tier
+        # self.coin_gecko = Coingecko(
+        #     demo_api_key=config["COIN_GECKO_API_KEY"],
+        #     environment="demo"
+        #     )
         self.coin_gecko = Coingecko(
-            demo_api_key=config["COIN_GECKO_API_KEY"],
-            environment="demo"
+            pro_api_key=config["COIN_GECKO_API_KEY"],
+            environment="pro"
             )
         self.dex_swap = [
             "0x"+event_signature_to_log_topic(x).hex()
@@ -161,6 +167,9 @@ class DataCollector:
             price = self.current_prices.get(coin["name"])
             if price is not None:
                 return np.float64(amount * price / (10 ** coin["decimals"]))
+            
+        else:
+            self.current_prices.clear()
 
         row = self.db.execute(
             """
@@ -191,7 +200,7 @@ class DataCollector:
             rows_to_insert = [
                 (
                     coin["name"],
-                    datetime_of_block.fromtimestamp(price[0] / 1000).date().isoformat(),
+                    datetime_of_block.fromtimestamp(price[0] / 1000, timezone.utc).date().isoformat(),
                     price[1]
                 )
                 for price in resp.prices
@@ -225,7 +234,7 @@ class DataCollector:
         transactions_in_batch = []
         for i, block in enumerate(gathered_blocks):
             number = int(block["number"], 16)
-            datetime_block = datetime.fromtimestamp(int(block["timestamp"], 16))
+            datetime_block = datetime.fromtimestamp(int(block["timestamp"], 16), timezone.utc).replace(tzinfo=None)
 
             transactions_in_block = []
             for transaction in zip(block["transactions"], block["receipts"]):

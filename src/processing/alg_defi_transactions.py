@@ -3,10 +3,11 @@ from collections import deque
 from processing.alg_cumulative_wealth_gain import CumulativeWealthGain
 
 class DefiTransactions:
-    def __init__(self, two_delta):
+    def __init__(self, two_delta, eth_pricing_mode):
         self.two_delta = two_delta
         self.gain_total = 0
         self.previous_tx = deque()
+        self.eth_pricing_mode = eth_pricing_mode
 
     def run_on_block(self, block: dict) -> int:
         # remove old transactions
@@ -25,7 +26,7 @@ class DefiTransactions:
 
         total_value = 0
         for hash, txs in grouped_tx.items():
-            cumulative_wealth_gain = CumulativeWealthGain(24)
+            cumulative_wealth_gain = CumulativeWealthGain(24, self.eth_pricing_mode)
             total_value = total_value + cumulative_wealth_gain.run_on_block({
                 "timestamp": block["timestamp"],
                 "transactions": txs if txs is not None else [],

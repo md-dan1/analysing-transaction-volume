@@ -1,6 +1,5 @@
 import asyncio
 import aiohttp
-import numpy
 
 class RPCClient():
     def __init__(self, rpc_url):
@@ -17,13 +16,11 @@ class RPCClient():
             await self.session.close()
 
     async def __aenter__(self):
-        if self._session is None or self._session.closed:
-            self._session = aiohttp.ClientSession(timeout=self._timeout, headers=self._headers)
+        await self.open()
         return self
 
     async def __aexit__(self, exc_type, exc, tb):
-        if self._session and not self._session.closed:
-            await self._session.close()
+        await self.close()
         
     async def rpc_call(self, method, params=[]):
         async with self.session.post(self.rpc_url, json={

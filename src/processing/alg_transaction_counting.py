@@ -1,10 +1,11 @@
 from collections import deque
 
 class TransactionCounting:
-    def __init__(self, two_delta ):
+    def __init__(self, two_delta, eth_pricing_mode):
         self.two_delta = two_delta
         self.gain_total = 0
         self.previous_tx = deque()
+        self.eth_pricing_mode = eth_pricing_mode
 
     def run_on_block(self, block: dict) -> int:
         #remove old transactions
@@ -15,7 +16,10 @@ class TransactionCounting:
             self.previous_tx.popleft()
 
         #add new transaction
-        transaction_sum = sum(tx['usd_value'] for tx in block['transactions'])
+        if self.eth_pricing_mode:
+            transaction_sum = sum(tx['eth_amount'] for tx in block['transactions'])
+        else:
+            transaction_sum = sum(tx['usd_value'] for tx in block['transactions'])
         self.previous_tx.append((current_time, transaction_sum))
         self.gain_total = self.gain_total + transaction_sum
         return self.gain_total

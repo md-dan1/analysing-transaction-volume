@@ -2,7 +2,6 @@ __pycache__
 data/processed/*
 data/raw/*
 *.json
-*.txt
 .DS_Store
 .idea
 old_data
@@ -10,6 +9,7 @@ statistics
 db.duckdb
 .env
 old_solution
-data/main.duckdb
-data/main.duckdb.wal
-data/main_old.duckdb
+data/*
+datastore/*
+.venv
+local/
